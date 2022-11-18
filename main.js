@@ -15,6 +15,7 @@ const Board = () => {
     playerTurn = players.player1;
     createBoard();
     displayTurn();
+    document.querySelector("form").querySelector("button").remove();
   };
 
   const displayTurn = () => {
@@ -103,7 +104,7 @@ const Board = () => {
     });
   };
 
-  const ResetGame = () => {
+  const ResetGame = (player1, player2) => {
     const gameEndHeading = document.querySelector(".winner-heading");
     const boxes = document.querySelectorAll(".box");
     boardState = [null, null, null, null, null, null, null, null, null];
@@ -111,13 +112,10 @@ const Board = () => {
     inPlay = true;
     boxes.forEach((box) => (box.innerText = ""));
     gameEndHeading.innerText = "";
+    players = { player1, player2 };
     playerTurn = players.player1;
     displayTurn();
   };
-
-  document.querySelector(".reset-btn").addEventListener("click", (e) => {
-    ResetGame();
-  });
 
   return {
     get currentTurn() {
@@ -133,6 +131,7 @@ const Board = () => {
     displayTurn,
     createBoard,
     StartGame,
+    ResetGame,
     get playerTurn() {
       return playerTurn;
     },
@@ -157,4 +156,10 @@ document.querySelector("form").addEventListener("submit", (e) => {
   player_1.name = document.getElementById("player_1").value;
   player_2.name = document.getElementById("player_2").value;
   board.StartGame(player_1, player_2);
+});
+
+document.querySelector(".reset-btn").addEventListener("click", (e) => {
+  player_1.name = document.getElementById("player_1").value;
+  player_2.name = document.getElementById("player_2").value;
+  board.ResetGame(player_1, player_2);
 });
